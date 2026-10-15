@@ -1,0 +1,188 @@
+{
+  "generated_from": [
+    "output/audit_trail.json",
+    "data/campus_customs_new.db"
+  ],
+  "reset_at": "2026-10-14T20:23:03.301",
+  "starting_checking": 3400.0,
+  "ending_checking": 160.0,
+  "ending_matches_cash_accounts": true,
+  "tickets": [
+    {
+      "id": 101,
+      "subject": "Bulldog tee",
+      "requester": "Tauhid Zaman",
+      "final_status": "resolved",
+      "outcome": "Tee is out of stock in size S. Restock (5 days + 1 day delivery, est. 2026-09-06) was blocked by overdue invoice #501; a person approved paying it ($840), which resolved the ticket. A reply to Tauhid is drafted for review.",
+      "agents": {
+        "boss": "Read the ticket and handed it to inventory, then accounting, then customer service, passing each one the facts from the step before. Logged the outcome and set the ticket to waiting_approval.",
+        "inventory": "stock_tracker: 0 on hand in size S, short 1. Restock from Bulldog Print Co (5 days) + QuickShip CT (1 day) = est. 2026-09-06, blocked by overdue invoice #501 ($840).",
+        "accounting": "Checked the bills due (invoice_reminder_and_payer) and filed approval request #1 to pay invoice #501 for the exact $840.00; noted checking would be $2,560 afterwards.",
+        "customer_service": "Re-checked stock, then drafted reply #1 to Tauhid Zaman: size S is out, expected about September 6, asking whether to proceed. Saved as a draft; nothing sent."
+      },
+      "tools_used": {
+        "boss": [
+          "get_ticket",
+          "list_open_tickets",
+          "update_ticket"
+        ],
+        "inventory": [
+          "stock_tracker",
+          "update_ticket"
+        ],
+        "accounting": [
+          "invoice_reminder_and_payer",
+          "request_human_approval",
+          "update_ticket"
+        ],
+        "customer_service": [
+          "draft_customer_message",
+          "get_ticket",
+          "stock_tracker",
+          "update_ticket"
+        ]
+      },
+      "human_approvals": [
+        {
+          "approval_request_id": 1,
+          "kind": "invoice_payment",
+          "amount": 840.0,
+          "approved_by": "Nolan Hall",
+          "cash_change": -840.0,
+          "checking_after": 2560.0
+        }
+      ],
+      "customer_drafts": [
+        {
+          "draft_id": 1,
+          "to": "Tauhid Zaman",
+          "subject": "Update on your Classic Bulldog Tee",
+          "status": "draft"
+        }
+      ],
+      "follow_ups": [
+        "Review and send customer draft #1 to Tauhid Zaman.",
+        "Confirm with Tauhid before the reprint ships."
+      ],
+      "runs": [
+        {
+          "run_id": "20261014-202304-82e88d",
+          "delegations": [
+            "inventory",
+            "accounting",
+            "customer_service"
+          ],
+          "tokens": 41078
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "subject": "Rent due",
+      "requester": "Elm City Properties",
+      "final_status": "resolved",
+      "outcome": "Rent notice matches the lease: $2,400 due 2026-09-02. Accounting filed approval request #2; a person approved and paid it, which resolved the ticket. Lease next due moved to 2026-10-02.",
+      "agents": {
+        "boss": "Run 1: sent the ticket to facilities only, so no payment was queued. Run 2: sent it to accounting, which filed the rent approval. Set the ticket to waiting_approval both times.",
+        "facilities": "Run 1: checked the notice against lease #1 (get_lease): Elm City Properties, $2,400, due 2026-09-02, 2 days away and urgent. Confirmed no reply to the landlord is needed.",
+        "accounting": "Run 2: checked the bills due (invoice_reminder_and_payer), filed rent approval request #2 for $2,400, and flagged that checking would be $160 afterwards, \"dangerously tight\"."
+      },
+      "tools_used": {
+        "boss": [
+          "get_ticket",
+          "list_open_tickets",
+          "update_ticket"
+        ],
+        "accounting": [
+          "get_ticket",
+          "invoice_reminder_and_payer",
+          "request_human_approval",
+          "update_ticket"
+        ],
+        "facilities": [
+          "get_lease",
+          "get_ticket",
+          "update_ticket"
+        ]
+      },
+      "human_approvals": [
+        {
+          "approval_request_id": 2,
+          "kind": "rent_payment",
+          "amount": 2400.0,
+          "approved_by": "Nolan Hall",
+          "cash_change": -2400.0,
+          "checking_after": 160.0
+        }
+      ],
+      "customer_drafts": [],
+      "follow_ups": [
+        "Cash is down to $160 after rent; watch upcoming bills (next rent due 2026-10-02)."
+      ],
+      "runs": [
+        {
+          "run_id": "20261014-202343-4accf3",
+          "delegations": [
+            "facilities"
+          ],
+          "tokens": 13020
+        },
+        {
+          "run_id": "20261014-202425-afc2c9",
+          "delegations": [
+            "accounting"
+          ],
+          "tokens": 20958
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "subject": "Bulk hoodie discount",
+      "requester": "Yale AI Club",
+      "final_status": "resolved",
+      "outcome": "Accounting priced 20 size M hoodies at 17.5% off ($47.85 each, $957.00 total, 54% margin vs. a 30% floor) and filed a price sign-off; a person signed off, which resolved the ticket with no cash moving. Only 8 are on hand; the other 12 still need a restock.",
+      "agents": {
+        "boss": "Sent the ticket straight to accounting for pricing, then logged the quote and the 12-unit shortfall and set the ticket to waiting_approval.",
+        "accounting": "bulk_order_discount at a 30% margin floor: competitor benchmark 17.5% (well inside the 45.8% the floor allows), $957.00 total. Its stock check showed 8 on hand, short 12. Filed price-override approval request #3."
+      },
+      "tools_used": {
+        "boss": [
+          "get_ticket",
+          "list_open_tickets",
+          "update_ticket"
+        ],
+        "accounting": [
+          "bulk_order_discount",
+          "get_ticket",
+          "request_human_approval",
+          "update_ticket"
+        ]
+      },
+      "human_approvals": [
+        {
+          "approval_request_id": 3,
+          "kind": "price_override",
+          "amount": 957.0,
+          "approved_by": "Nolan Hall",
+          "cash_change": 0.0,
+          "checking_after": 160.0
+        }
+      ],
+      "customer_drafts": [],
+      "follow_ups": [
+        "No reply to Yale AI Club was drafted; customer service still needs to send the quote.",
+        "Restock of 12 hoodies (12 \u00d7 $22 = $264 from Bulldog Print Co) was not filed, and checking ($160) can't cover it yet."
+      ],
+      "runs": [
+        {
+          "run_id": "20261014-202500-064b32",
+          "delegations": [
+            "accounting"
+          ],
+          "tokens": 21457
+        }
+      ]
+    }
+  ]
+}

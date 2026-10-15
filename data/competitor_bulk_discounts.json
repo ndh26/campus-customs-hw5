@@ -1,0 +1,50 @@
+{
+  "_about": "Published volume/bulk discount policies used as comparables by the bulk_order_discount tool. Collected 2026-10-14 by web search. Only entries with 'bulk': true count toward the benchmark; the others are shown for context.",
+  "competitors": [
+    {
+      "name": "University of Windsor Bookstore (departmental orders)",
+      "url": "https://uwindsor.ca/dailynews/node/9274",
+      "bulk": true,
+      "basis": "order_value",
+      "tiers": [
+        {"min_order_value": 100, "discount_pct": 10},
+        {"min_order_value": 300, "discount_pct": 20}
+      ],
+      "note": "Larger special bulk orders get 25%, but the threshold isn't published, so it isn't used."
+    },
+    {
+      "name": "Agon Swim (custom wholesale orders)",
+      "url": "https://agonswim.wiki.zoho.com/Wholesale-discounts.html",
+      "bulk": true,
+      "basis": "quantity",
+      "tiers": [
+        {"min_qty": 12, "discount_pct": 15}
+      ],
+      "note": "12+ units earn 15/25/30% depending on the retailer's annual volume; the entry-level 15% is used since this is a one-off order."
+    },
+    {
+      "name": "Stanford Student Store",
+      "url": "https://www.sse.stanford.edu/ventures/student-store",
+      "bulk": false,
+      "basis": "student_id",
+      "tiers": [{"min_qty": 1, "discount_pct": 10}],
+      "note": "Everyday student discount, not a bulk discount."
+    },
+    {
+      "name": "Rice University bookstore spirit items",
+      "url": "https://ricethresher.org/article/2025/04/student-store-offers-discounted-merch-to-students",
+      "bulk": false,
+      "basis": "promotion",
+      "tiers": [{"min_qty": 1, "discount_pct": 10}],
+      "note": "Monthly 10% off designated spirit items; not a bulk discount."
+    },
+    {
+      "name": "Missouri State University bookstore",
+      "url": "https://www.missouristate.edu/Policy/Chapter7/Op7_03_Bookstore_Discount_Policy.htm",
+      "bulk": false,
+      "basis": "student_id",
+      "tiers": [{"min_qty": 1, "discount_pct": 35}],
+      "note": "Student discount on clothing and logoed items; not a bulk discount."
+    }
+  ]
+}

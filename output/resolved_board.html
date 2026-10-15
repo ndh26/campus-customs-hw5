@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Customs: Resolved Tickets</title>
+<style>
+  :root { --yale:#00356b; --yale-2:#286dc0; --ink:#e9eef5; --muted:#8da2bb; --line:rgba(99,170,255,.18); --good:#6fcf97; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI",system-ui,sans-serif; color:var(--ink); line-height:1.5;
+         background:radial-gradient(1000px 500px at 10% -10%, rgba(40,109,192,.35), transparent 60%), #050f1f; min-height:100vh; }
+  h1,h2,h3 { font-family:Georgia,serif; font-weight:600; margin:0; }
+  header { padding:22px 32px; background:linear-gradient(90deg, rgba(0,53,107,.95), rgba(0,53,107,.55)); border-bottom:1px solid var(--line);
+           display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; }
+  header .sub { color:#b9cde6; font-size:13px; letter-spacing:.12em; text-transform:uppercase; }
+  .balance { text-align:right; } .balance strong { font-family:Georgia,serif; font-size:24px; }
+  .balance span { display:block; font-size:12px; color:#b9cde6; }
+  main { max-width:1050px; margin:0 auto; padding:28px 24px 60px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+  .card { display:grid; gap:6px; padding:18px; border-radius:14px; background:rgba(13,34,64,.75); border:1px solid var(--line);
+          color:inherit; text-decoration:none; border-left:4px solid var(--good); transition:transform .2s, border-color .2s; }
+  .card:hover { transform:translateY(-3px); border-color:#63aaff; }
+  .card__top { display:flex; justify-content:space-between; align-items:center; }
+  .num { font-family:Georgia,serif; font-size:20px; color:#b9cde6; }
+  .pill { font-size:12px; font-weight:600; padding:2px 10px; border-radius:999px; background:rgba(111,207,151,.18); color:var(--good); }
+  .cash { font-family:Georgia,serif; font-size:18px; color:#cfe3ff; } .cash.neg { color:#ffb4a8; }
+  .muted { color:var(--muted); } .small { font-size:12px; }
+  .detail { display:none; } .detail:target { display:block; }
+  body:has(.detail:target) .overview { display:none; }
+  .detail { background:rgba(13,34,64,.75); border:1px solid var(--line); border-radius:16px; padding:26px 30px; }
+  .detail__head { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .detail h3 { margin:22px 0 10px; font-size:17px; }
+  .outcome { font-size:16px; padding:12px 14px; border-radius:10px; background:rgba(0,53,107,.55); border:1px solid var(--line); }
+  .agents { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+  .agent { padding:14px; border-radius:12px; background:rgba(255,255,255,.04); border:1px solid var(--line); border-top:3px solid var(--c); }
+  .agent p { margin:6px 0; font-size:14px; }
+  .chips span { display:inline-block; font-family:Consolas,monospace; font-size:11px; padding:1px 6px; margin:2px 4px 0 0; border-radius:6px;
+                background:rgba(255,255,255,.08); border:1px solid var(--line); }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:20px; } @media (max-width:700px) { .cols { grid-template-columns:1fr; } }
+  ul { margin:0; padding-left:20px; } li { margin:4px 0; }
+  code { font-family:Consolas,monospace; font-size:12px; }
+  .back { color:#63aaff; text-decoration:none; font-size:14px; display:inline-block; margin-bottom:12px; }
+  .summary { margin:22px 0 0; padding:14px 18px; border-radius:12px; background:rgba(111,207,151,.08); border:1px solid rgba(111,207,151,.35); }
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Campus Customs · Resolved Tickets</h1><div class="sub">All three tickets closed · click a ticket for the full story</div></div>
+  <div class="balance"><span>Checking: start → end</span><strong>$3,400.00 → $160.00</strong>
+    <span>matches cash_accounts ✓</span></div>
+</header>
+<main>
+  <div class="overview">
+    <div class="grid">
+    <a class="card" href="#t101">
+      <div class="card__top"><span class="num">#101</span><span class="pill">✓ Resolved</span></div>
+      <strong>Bulldog tee</strong>
+      <span class="muted">Tauhid Zaman</span>
+      <span class="cash neg">−$840.00</span>
+    </a>
+    <a class="card" href="#t102">
+      <div class="card__top"><span class="num">#102</span><span class="pill">✓ Resolved</span></div>
+      <strong>Rent due</strong>
+      <span class="muted">Elm City Properties</span>
+      <span class="cash neg">−$2,400.00</span>
+    </a>
+    <a class="card" href="#t103">
+      <div class="card__top"><span class="num">#103</span><span class="pill">✓ Resolved</span></div>
+      <strong>Bulk hoodie discount</strong>
+      <span class="muted">Yale AI Club</span>
+      <span class="cash ">No cash moved</span>
+    </a></div>
+    <div class="summary">Every ticket resolved after a person approved what the agents queued: two payments ($840.00 invoice,
+      $2,400.00 rent) and one price sign-off ($957 quote, no cash). 96,513 tokens across
+      4 agent runs.</div>
+  </div>
+  
+    <section class="detail" id="t101">
+      <a class="back" href="#">← All tickets</a>
+      <div class="detail__head"><h2>#101 · Bulldog tee</h2><span class="pill">✓ Resolved</span></div>
+      <p class="muted">Tauhid Zaman</p>
+      <p class="outcome">Tee is out of stock in size S. Restock (5 days + 1 day delivery, est. 2026-09-06) was blocked by overdue invoice #501; a person approved paying it ($840), which resolved the ticket. A reply to Tauhid is drafted for review.</p>
+      <h3>What each agent contributed</h3>
+      <div class="agents">
+        <div class="agent" style="--c:#f2c94c"><b>Boss</b><p>Read the ticket and handed it to inventory, then accounting, then customer service, passing each one the facts from the step before. Logged the outcome and set the ticket to waiting_approval.</p>
+          <div class="chips"><span>get_ticket</span><span>list_open_tickets</span><span>update_ticket</span></div></div>
+        <div class="agent" style="--c:#5fb4ff"><b>Inventory</b><p>stock_tracker: 0 on hand in size S, short 1. Restock from Bulldog Print Co (5 days) + QuickShip CT (1 day) = est. 2026-09-06, blocked by overdue invoice #501 ($840).</p>
+          <div class="chips"><span>stock_tracker</span><span>update_ticket</span></div></div>
+        <div class="agent" style="--c:#6fcf97"><b>Accounting</b><p>Checked the bills due (invoice_reminder_and_payer) and filed approval request #1 to pay invoice #501 for the exact $840.00; noted checking would be $2,560 afterwards.</p>
+          <div class="chips"><span>invoice_reminder_and_payer</span><span>request_human_approval</span><span>update_ticket</span></div></div>
+        <div class="agent" style="--c:#ef7fbf"><b>Customer service</b><p>Re-checked stock, then drafted reply #1 to Tauhid Zaman: size S is out, expected about September 6, asking whether to proceed. Saved as a draft; nothing sent.</p>
+          <div class="chips"><span>draft_customer_message</span><span>get_ticket</span><span>stock_tracker</span><span>update_ticket</span></div></div></div>
+      <div class="cols">
+        <div><h3>Human approvals</h3><ul><li>#1 invoice payment: $840.00, approved by Nolan Hall. Cash −$840.00 → checking $2,560.00</li></ul></div>
+        <div><h3>Customer drafts</h3><ul><li>Draft #1 to Tauhid Zaman: "Update on your Classic Bulldog Tee" (draft, not sent)</li></ul></div>
+      </div>
+      <h3>Still to do</h3><ul><li>Review and send customer draft #1 to Tauhid Zaman.</li><li>Confirm with Tauhid before the reprint ships.</li></ul>
+      <p class="muted small">Runs: <code>20261014-202304-82e88d</code> (41,078 tokens; boss → inventory → accounting → customer_service)</p>
+    </section>
+    <section class="detail" id="t102">
+      <a class="back" href="#">← All tickets</a>
+      <div class="detail__head"><h2>#102 · Rent due</h2><span class="pill">✓ Resolved</span></div>
+      <p class="muted">Elm City Properties</p>
+      <p class="outcome">Rent notice matches the lease: $2,400 due 2026-09-02. Accounting filed approval request #2; a person approved and paid it, which resolved the ticket. Lease next due moved to 2026-10-02.</p>
+      <h3>What each agent contributed</h3>
+      <div class="agents">
+        <div class="agent" style="--c:#f2c94c"><b>Boss</b><p>Run 1: sent the ticket to facilities only, so no payment was queued. Run 2: sent it to accounting, which filed the rent approval. Set the ticket to waiting_approval both times.</p>
+          <div class="chips"><span>get_ticket</span><span>list_open_tickets</span><span>update_ticket</span></div></div>
+        <div class="agent" style="--c:#f2994a"><b>Facilities</b><p>Run 1: checked the notice against lease #1 (get_lease): Elm City Properties, $2,400, due 2026-09-02, 2 days away and urgent. Confirmed no reply to the landlord is needed.</p>
+          <div class="chips"><span>get_lease</span><span>get_ticket</span><span>update_ticket</span></div></div>
+        <div class="agent" style="--c:#6fcf97"><b>Accounting</b><p>Run 2: checked the bills due (invoice_reminder_and_payer), filed rent approval request #2 for $2,400, and flagged that checking would be $160 afterwards, &quot;dangerously tight&quot;.</p>
+          <div class="chips"><span>get_ticket</span><span>invoice_reminder_and_payer</span><span>request_human_approval</span><span>update_ticket</span></div></div></div>
+      <div class="cols">
+        <div><h3>Human approvals</h3><ul><li>#2 rent payment: $2,400.00, approved by Nolan Hall. Cash −$2,400.00 → checking $160.00</li></ul></div>
+        <div><h3>Customer drafts</h3><ul><li>None</li></ul></div>
+      </div>
+      <h3>Still to do</h3><ul><li>Cash is down to $160 after rent; watch upcoming bills (next rent due 2026-10-02).</li></ul>
+      <p class="muted small">Runs: <code>20261014-202343-4accf3</code> (13,020 tokens; boss → facilities) · <code>20261014-202425-afc2c9</code> (20,958 tokens; boss → accounting)</p>
+    </section>
+    <section class="detail" id="t103">
+      <a class="back" href="#">← All tickets</a>
+      <div class="detail__head"><h2>#103 · Bulk hoodie discount</h2><span class="pill">✓ Resolved</span></div>
+      <p class="muted">Yale AI Club</p>
+      <p class="outcome">Accounting priced 20 size M hoodies at 17.5% off ($47.85 each, $957.00 total, 54% margin vs. a 30% floor) and filed a price sign-off; a person signed off, which resolved the ticket with no cash moving. Only 8 are on hand; the other 12 still need a restock.</p>
+      <h3>What each agent contributed</h3>
+      <div class="agents">
+        <div class="agent" style="--c:#f2c94c"><b>Boss</b><p>Sent the ticket straight to accounting for pricing, then logged the quote and the 12-unit shortfall and set the ticket to waiting_approval.</p>
+          <div class="chips"><span>get_ticket</span><span>list_open_tickets</span><span>update_ticket</span></div></div>
+        <div class="agent" style="--c:#6fcf97"><b>Accounting</b><p>bulk_order_discount at a 30% margin floor: competitor benchmark 17.5% (well inside the 45.8% the floor allows), $957.00 total. Its stock check showed 8 on hand, short 12. Filed price-override approval request #3.</p>
+          <div class="chips"><span>bulk_order_discount</span><span>get_ticket</span><span>request_human_approval</span><span>update_ticket</span></div></div></div>
+      <div class="cols">
+        <div><h3>Human approvals</h3><ul><li>#3 price override: $957.00, approved by Nolan Hall. Cash unchanged → checking $160.00</li></ul></div>
+        <div><h3>Customer drafts</h3><ul><li>None</li></ul></div>
+      </div>
+      <h3>Still to do</h3><ul><li>No reply to Yale AI Club was drafted; customer service still needs to send the quote.</li><li>Restock of 12 hoodies (12 × $22 = $264 from Bulldog Print Co) was not filed, and checking ($160) can&#x27;t cover it yet.</li></ul>
+      <p class="muted small">Runs: <code>20261014-202500-064b32</code> (21,457 tokens; boss → accounting)</p>
+    </section>
+</main>
+</body>
+</html>

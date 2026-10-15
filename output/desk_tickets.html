@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Customs: Desk Tickets</title>
+<style>
+  :root { --yale: #00356b; --yale-light: #286dc0; --ink: #222; --muted: #666; --line: #dde3ea; --bg: #f5f7fa; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.5; }
+  header { background: var(--yale); color: #fff; padding: 20px 32px; }
+  header h1 { margin: 0; font-size: 22px; }
+  header p { margin: 4px 0 0; opacity: .85; font-size: 14px; }
+  nav { display: flex; gap: 8px; padding: 12px 32px; background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; }
+  nav a { padding: 8px 16px; border-radius: 6px; text-decoration: none; color: var(--yale); font-weight: 600; border: 1px solid var(--line); }
+  nav a.active { background: var(--yale); color: #fff; border-color: var(--yale); }
+  main { max-width: 960px; margin: 24px auto; padding: 0 24px; }
+  .ticket { display: none; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 28px 32px; }
+  .ticket.active { display: block; }
+  .ticket h2 { margin: 0 0 4px; color: var(--yale); }
+  .ticket .type { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase;
+                  color: var(--yale-light); background: #e8f0fa; padding: 2px 8px; border-radius: 4px; }
+  dl.facts { display: grid; grid-template-columns: 160px 1fr; gap: 6px 16px; margin: 20px 0 8px; font-size: 14px; }
+  dl.facts dt { color: var(--muted); }
+  dl.facts dd { margin: 0; }
+  section.result { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; }
+  section.result h3 { margin: 0 0 10px; font-size: 16px; }
+  section.expected h3 { color: var(--yale); }
+  section.actual h3 { color: #2e7d32; }
+  .placeholder { color: var(--muted); font-style: italic; background: var(--bg); border: 1px dashed var(--line); border-radius: 6px; padding: 14px 16px; }
+  .compare { margin-top: 14px; padding: 12px 14px; border-radius: 6px; background: #fff8e1; border: 1px solid #f2d27a; font-size: 14px; }
+  .ok { color: #2e7d32; font-weight: 600; }
+  .blocked-note { font-size: 12px; color: var(--muted); }
+  table.tools, table.ledger { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+  table.tools th, table.tools td, table.ledger th, table.ledger td { border-bottom: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; }
+  table.tools th, table.ledger th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+  table.ledger .num { text-align: right; white-space: nowrap; }
+  table.ledger tr.edge td { background: var(--bg); }
+  .result h4 { margin: 16px 0 6px; font-size: 14px; color: var(--yale); }
+  @media print {
+    nav { display: none; }
+    body { background: #fff; }
+    .ticket { display: block !important; border: none; page-break-after: always; }
+    .ticket:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Campus Customs: Desk Tickets</h1>
+  <p>Expected vs. actual outcome for each ticket, plus where the cash went. Shop date: 2026-08-31.</p>
+</header>
+
+<nav>
+  <a href="#ticket-101" data-ticket="101">#101 Bulldog tee</a>
+  <a href="#ticket-102" data-ticket="102">#102 Rent due</a>
+  <a href="#ticket-103" data-ticket="103">#103 Bulk hoodie discount</a>
+  <a href="#ticket-cash" data-ticket="cash">Cash</a>
+</nav>
+
+<main>
+  <!-- ===================== TICKET 101 ===================== -->
+  <article class="ticket" id="ticket-101">
+    <span class="type">customer_order</span>
+    <h2>#101: Bulldog tee</h2>
+    <dl class="facts">
+      <dt>Requester</dt><dd>Tauhid Zaman</dd>
+      <dt>Request</dt><dd>1 × Classic Bulldog Tee (CC-TEE-WHITE), size S</dd>
+      <dt>Linked invoice</dt><dd>#501: Bulldog Print Co, $840, rush reprint of CC-TEE-WHITE S</dd>
+      <dt>Ticket notes</dt><dd>Needs a tee in size S.</dd>
+      <dt>Opened</dt><dd>2026-08-31 09:15</dd>
+    </dl>
+
+    <section class="result expected" id="expected-101">
+      <h3>Expected</h3>
+      <p>The boss should call <strong>inventory</strong> first, because the request has to be answered on whether the tee is in stock and then what the delivery time will be. It should then call <strong>accounting</strong> and <strong>customer service</strong>.</p>
+      <dl class="facts">
+        <dt>Agent order</dt><dd>boss → inventory → accounting → customer service</dd>
+        <dt>Expected tools</dt><dd><code>stock_tracker</code>, <code>list_vendors</code>, <code>get_inventory</code></dd>
+      </dl>
+    </section>
+
+    <section class="result actual" id="actual-101">
+      <h3>Actual</h3>
+      <p>Tee is out of stock in size S. Restock (5 days + 1 day delivery, est. 2026-09-06) was blocked by overdue invoice #501; a person approved paying it ($840), which resolved the ticket. A reply to Tauhid is drafted for review.</p>
+      
+      <h4><code>20261014-202304-82e88d</code>: 41,078 tokens, 3 delegation(s)</h4>
+      <p><strong>Agents that worked:</strong> boss → inventory → accounting → customer service</p>
+      <p><strong>What the boss delegated:</strong></p>
+      <ul><li><strong>Boss → Inventory:</strong> Check whether SKU CC-TEE-WHITE, size S, quantity 1 can be filled today. Consider the linked overdue invoice 501 to Bulldog Print Co and report whether payment is blocking fulfillment, plus any restock/production timing.</li><li><strong>Boss → Accounting:</strong> Handle overdue invoice #501 from Bulldog Print Co for $840.00, due 2026-08-28, which inventory says blocks restock of 1 CC-TEE-WHITE size S. Determine the payment/approval needed and record the next step.</li><li><strong>Boss → Customer service:</strong> Draft a reply to Tauhid Zaman: CC-TEE-WHITE size S, qty 1 is unavailable today; inventory estimates delivery on 2026-09-06 after 5 days&#x27; restock plus 1 day shipping, but the overdue $840.00 invoice #501 must be approved and paid first. Ask whether they want to proceed with that timing, without promising fulfillment before payment.</li></ul>
+      <table class="tools"><tr><th>Agent</th><th>Tools used</th><th>Blocked</th><th>Tokens</th></tr><tr><td>Boss</td><td><code>list_open_tickets</code>, <code>get_ticket</code>, <code>update_ticket</code></td><td></td><td>12,641</td></tr><tr><td>Inventory</td><td><code>stock_tracker</code>, <code>update_ticket</code></td><td>1</td><td>7,016</td></tr><tr><td>Accounting</td><td><code>invoice_reminder_and_payer</code>, <code>request_human_approval</code>, <code>update_ticket</code></td><td>1</td><td>10,002</td></tr><tr><td>Customer service</td><td><code>get_ticket</code>, <code>stock_tracker</code>, <code>draft_customer_message</code>, <code>update_ticket</code></td><td>1</td><td>11,419</td></tr></table>
+      <p><strong>Human approval:</strong></p><ul><li>Request #1 (invoice payment, $840.00) approved by Nolan Hall: cash −$840.00, checking $2,560.00. Ticket auto-resolved.</li></ul>
+      <p><strong>Final status:</strong> <span class="ok">✓ resolved</span></p>
+      <div class="compare"><strong>Expected vs. actual:</strong> Agent order matched exactly. Of the expected tools only <code>stock_tracker</code> was used. Its result already includes the restock vendor and lead time, so the agents never needed <code>list_vendors</code> or <code>get_inventory</code>.</div>
+      <p class="blocked-note">"Blocked" = the specialist tried to change the ticket's status, the harness stopped it (only the boss may), and it added a note instead.</p>
+    </section>
+  </article>
+
+  <!-- ===================== TICKET 102 ===================== -->
+  <article class="ticket" id="ticket-102">
+    <span class="type">rent_notice</span>
+    <h2>#102: Rent due</h2>
+    <dl class="facts">
+      <dt>Requester</dt><dd>Elm City Properties (landlord)</dd>
+      <dt>Request</dt><dd>Shop rent due in 2 days</dd>
+      <dt>Linked lease</dt><dd>#1: Chapel Street shop, $2,400/month, next due 2026-09-02</dd>
+      <dt>Ticket notes</dt><dd>Email: shop rent due in 2 days.</dd>
+      <dt>Opened</dt><dd>2026-08-31 11:05</dd>
+    </dl>
+
+    <section class="result expected" id="expected-102">
+      <h3>Expected</h3>
+      <p>The boss should call <strong>facilities</strong> first, because this is an interaction with the landlord. It should then call <strong>accounting</strong> and <strong>customer service</strong>.</p>
+      <dl class="facts">
+        <dt>Agent order</dt><dd>boss → facilities → accounting → customer service</dd>
+        <dt>Expected tools</dt><dd><code>invoice_reminder_and_payer</code>, <code>get_lease</code>, <code>request_human_approval</code></dd>
+      </dl>
+    </section>
+
+    <section class="result actual" id="actual-102">
+      <h3>Actual</h3>
+      <p>Rent notice matches the lease: $2,400 due 2026-09-02. Accounting filed approval request #2; a person approved and paid it, which resolved the ticket. Lease next due moved to 2026-10-02.</p>
+      
+      <h4>Run 1 of 2 · <code>20261014-202343-4accf3</code>: 13,020 tokens, 1 delegation(s)</h4>
+      <p><strong>Agents that worked:</strong> boss → facilities</p>
+      <p><strong>What the boss delegated:</strong></p>
+      <ul><li><strong>Boss → Facilities:</strong> Review the rent notice for the Chapel Street shop lease and confirm the amount, due date, and any action needed from the owner. Recommend the appropriate ticket status.</li></ul>
+      <table class="tools"><tr><th>Agent</th><th>Tools used</th><th>Blocked</th><th>Tokens</th></tr><tr><td>Boss</td><td><code>list_open_tickets</code>, <code>get_ticket</code>, <code>update_ticket</code></td><td></td><td>7,267</td></tr><tr><td>Facilities</td><td><code>get_ticket</code>, <code>get_lease</code>, <code>update_ticket</code></td><td>1</td><td>5,753</td></tr></table>
+      <h4>Run 2 of 2 · <code>20261014-202425-afc2c9</code>: 20,958 tokens, 1 delegation(s)</h4>
+      <p><strong>Agents that worked:</strong> boss → accounting</p>
+      <p><strong>What the boss delegated:</strong></p>
+      <ul><li><strong>Boss → Accounting:</strong> Review the confirmed lease details for Elm City Properties: $2,400 monthly rent for the Chapel Street shop, due 2026-09-02. Prepare or identify the approval/payment action needed; do not mark resolved because owner approval is still required.</li></ul>
+      <table class="tools"><tr><th>Agent</th><th>Tools used</th><th>Blocked</th><th>Tokens</th></tr><tr><td>Boss</td><td><code>list_open_tickets</code>, <code>get_ticket</code>, <code>update_ticket</code></td><td></td><td>7,945</td></tr><tr><td>Accounting</td><td><code>get_ticket</code>, <code>invoice_reminder_and_payer</code>, <code>request_human_approval</code>, <code>update_ticket</code></td><td>1</td><td>13,013</td></tr></table>
+      <p><strong>Human approval:</strong></p><ul><li>Request #2 (rent payment, $2,400.00) approved by Nolan Hall: cash −$2,400.00, checking $160.00. Ticket auto-resolved.</li></ul>
+      <p><strong>Final status:</strong> <span class="ok">✓ resolved</span></p>
+      <div class="compare"><strong>Expected vs. actual:</strong> It took two runs. In run 1 the boss stopped after facilities, so no payment was queued and nothing could be approved. In run 2 it sent the ticket to accounting. Across both runs the order was facilities → accounting, and all three expected tools were used. Customer service was never called. That fits facilities' "a human handles the landlord" rule, and the draft tool would have rejected a message mentioning rent or the landlord anyway.</div>
+      <p class="blocked-note">"Blocked" = the specialist tried to change the ticket's status, the harness stopped it (only the boss may), and it added a note instead.</p>
+    </section>
+  </article>
+
+  <!-- ===================== TICKET 103 ===================== -->
+  <article class="ticket" id="ticket-103">
+    <span class="type">price_override</span>
+    <h2>#103: Bulk hoodie discount</h2>
+    <dl class="facts">
+      <dt>Requester</dt><dd>Yale AI Club</dd>
+      <dt>Request</dt><dd>20 × Basic Hoodie Big Yale (CC-HOOD-NAVY), size M, at a bulk discount</dd>
+      <dt>Ticket notes</dt><dd>Student org wants 20 hoodies, size M, asking for a bulk discount.</dd>
+      <dt>Opened</dt><dd>2026-08-31 16:55</dd>
+    </dl>
+
+    <section class="result expected" id="expected-103">
+      <h3>Expected</h3>
+      <p>The boss should call <strong>inventory</strong> first, because we first need to know whether the hoodies are in stock. That informs the margin and, in turn, the price we offer. It should then call <strong>accounting</strong> and <strong>customer service</strong>.</p>
+      <dl class="facts">
+        <dt>Agent order</dt><dd>boss → inventory → accounting → customer service</dd>
+        <dt>Expected tools</dt><dd><code>bulk_order_discount</code>, <code>stock_tracker</code>, <code>list_vendors</code>, <code>get_inventory</code>, <code>draft_customer_message</code></dd>
+      </dl>
+    </section>
+
+    <section class="result actual" id="actual-103">
+      <h3>Actual</h3>
+      <p>Accounting priced 20 size M hoodies at 17.5% off ($47.85 each, $957.00 total, 54% margin vs. a 30% floor) and filed a price sign-off; a person signed off, which resolved the ticket with no cash moving. Only 8 are on hand; the other 12 still need a restock.</p>
+      
+      <h4><code>20261014-202500-064b32</code>: 21,457 tokens, 1 delegation(s)</h4>
+      <p><strong>Agents that worked:</strong> boss → accounting</p>
+      <p><strong>What the boss delegated:</strong></p>
+      <ul><li><strong>Boss → Accounting:</strong> Review Yale AI Club&#x27;s request for a bulk discount on 20 CC-HOOD-NAVY hoodies, size M. Determine the available bulk price/discount and whether owner approval is required; report exact amounts and the next action.</li></ul>
+      <table class="tools"><tr><th>Agent</th><th>Tools used</th><th>Blocked</th><th>Tokens</th></tr><tr><td>Boss</td><td><code>list_open_tickets</code>, <code>get_ticket</code>, <code>update_ticket</code></td><td></td><td>7,178</td></tr><tr><td>Accounting</td><td><code>bulk_order_discount</code>, <code>get_ticket</code>, <code>request_human_approval</code>, <code>update_ticket</code></td><td>1</td><td>14,279</td></tr></table>
+      <p><strong>Human approval:</strong></p><ul><li>Request #3 (price override, $957.00) approved by Nolan Hall: cash unchanged, checking $160.00. Ticket auto-resolved.</li></ul>
+      <p><strong>Final status:</strong> <span class="ok">✓ resolved</span></p>
+      <div class="compare"><strong>Expected vs. actual:</strong> Much shorter than expected: the boss went straight to accounting and skipped inventory and customer service. <code>bulk_order_discount</code> was used and its built-in stock check covered the inventory question. <code>stock_tracker</code>, <code>list_vendors</code>, <code>get_inventory</code> and <code>draft_customer_message</code> were never called, so no customer reply exists.</div>
+      <p class="blocked-note">"Blocked" = the specialist tried to change the ticket's status, the harness stopped it (only the boss may), and it added a note instead.</p>
+    </section>
+  </article>
+
+  <!-- ===================== CASH ===================== -->
+  <article class="ticket" id="ticket-cash">
+    <span class="type">cash</span>
+    <h2>Cash: where the money went</h2>
+    <p>Checking account, from the reset at 2026-10-14 20:23 through all three tickets resolving.</p>
+    <table class="ledger">
+      <tr><th>Ticket</th><th>Why the cash changed</th><th>Approval</th><th class="num">Change</th><th class="num">Checking after</th></tr>
+      <tr class="edge"><td colspan="3"><strong>Starting balance</strong> (after reset; restored from <code>campus_customs.db</code>)</td><td></td><td class="num"><strong>$3,400.00</strong></td></tr>
+      <tr><td>#101</td><td>Paid Bulldog Print Co invoice #501 ($840.00), the overdue rush reprint of the size S Classic Bulldog Tee. Paying it unblocks the restock Tauhid's order is waiting on.</td><td>#1 · invoice payment · Nolan Hall</td><td class='num'>−$840.00</td><td class='num'>$2,560.00</td></tr><tr><td>#102</td><td>Paid September rent ($2,400.00) to Elm City Properties for the Chapel Street shop (lease #1), due 2026-09-02. The lease's next due date moved to 2026-10-02.</td><td>#2 · rent payment · Nolan Hall</td><td class='num'>−$2,400.00</td><td class='num'>$160.00</td></tr><tr><td>#103</td><td>No cash moved. The approval was a price sign-off on the $957.00 quote to Yale AI Club (20 hoodies at 17.5% off, $47.85 each): money the shop will collect, not spend. No restock purchase was filed.</td><td>#3 · price override · Nolan Hall</td><td class='num'>$0.00</td><td class='num'>$160.00</td></tr>
+      <tr class="edge"><td colspan="3"><strong>Ending balance</strong></td><td class="num"><strong>−$3,240.00</strong></td><td class="num"><strong>$160.00</strong></td></tr>
+    </table>
+    <section class="result actual">
+      <h3>Check against the working database</h3>
+      <p><code>cash_accounts</code> in <code>data/campus_customs_new.db</code>: checking = <strong>$160.00</strong>.
+         <span class="ok">✓ Matches the ledger.</span></p>
+      <p>Math: $3,400.00 − $840.00 − $2,400.00 − $0.00 = <strong>$160.00</strong>.
+         The <code>payments</code> table holds 2 rows totalling $3,240.00, each approved by
+         Nolan Hall.</p>
+      <p><strong>Not spent:</strong> the 12-hoodie restock for #103 (12 × $22 = $264 from Bulldog Print Co) was never filed, and at
+         $160.00 checking couldn't cover it.</p>
+    </section>
+  </article>
+</main>
+
+<script>
+  // One ticket per page: show the ticket named in the URL hash (default #101).
+  function show() {
+    const id = (location.hash || "#ticket-101").slice(1);
+    document.querySelectorAll(".ticket").forEach(t => t.classList.toggle("active", t.id === id));
+    document.querySelectorAll("nav a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+  }
+  window.addEventListener("hashchange", show);
+  show();
+</script>
+</body>
+</html>

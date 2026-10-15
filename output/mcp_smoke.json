@@ -1,0 +1,196 @@
+{
+  "server": "campus-customs",
+  "connection": {
+    "config_file": ".mcp.json",
+    "transport": "stdio",
+    "command": "py mcp_server/server.py",
+    "connected_at": "2026-10-14T18:54:14",
+    "tools_listed": [
+      {
+        "name": "stock_tracker",
+        "description": "Check whether a product is in stock in the size the customer picked."
+      },
+      {
+        "name": "invoice_reminder_and_payer",
+        "description": "List bills that are overdue or due soon, and optionally turn autopay on or off."
+      },
+      {
+        "name": "bulk_order_discount",
+        "description": "Price a customer's bulk order from two sources, for an employee to approve."
+      }
+    ]
+  },
+  "database": "data/campus_customs_new.db",
+  "runs": [
+    {
+      "prompt": "Let's run 1 first: The customer wants a size S tee and clicks on the S option. Run what happens",
+      "tool": "stock_tracker",
+      "arguments": {
+        "sku": "CC-TEE-WHITE",
+        "size": "S",
+        "qty": 1
+      },
+      "ran_at": "2026-10-14T18:56:12",
+      "is_error": false,
+      "passed": true,
+      "tool_output": {
+        "sku": "CC-TEE-WHITE",
+        "name": "Classic Bulldog Tee",
+        "size": "S",
+        "requested_qty": 1,
+        "on_hand": 0,
+        "in_stock": false,
+        "shortfall": 1,
+        "restock": {
+          "estimate_available": true,
+          "restock_vendor": "Bulldog Print Co",
+          "restock_days": 5,
+          "delivery_vendor": "QuickShip CT",
+          "delivery_days": 1,
+          "total_days": 6,
+          "estimated_delivery_date": "2026-09-06",
+          "blocked_by_invoice": {
+            "invoice_id": 501,
+            "amount": 840.0,
+            "due_date": "2026-08-28",
+            "days_overdue": 3
+          },
+          "note": "Restock is waiting on unpaid invoice #501 ($840.00). The estimate assumes it is paid today; each day it stays unpaid pushes delivery back a day."
+        },
+        "message": "Out of stock for Classic Bulldog Tee in size S. Estimated delivery: 2026-09-06 (about 6 days: 5 to restock + 1 to deliver)."
+      }
+    },
+    {
+      "prompt": "Run 2: let's say the rent is due and we get an email from the landlord. What shows on the employee screen",
+      "tool": "invoice_reminder_and_payer",
+      "arguments": {
+        "days_ahead": 7
+      },
+      "ran_at": "2026-10-14T18:57:30",
+      "is_error": false,
+      "passed": true,
+      "tool_output": {
+        "shop_today": "2026-08-31",
+        "autopay": {
+          "enabled": false,
+          "set_by": null,
+          "set_at": null
+        },
+        "bills": [
+          {
+            "kind": "invoice",
+            "ref_id": 501,
+            "payee": "Bulldog Print Co",
+            "amount": 840.0,
+            "due_date": "2026-08-28",
+            "description": "Rush reprint CC-TEE-WHITE S",
+            "days_until_due": -3,
+            "status": "overdue"
+          },
+          {
+            "kind": "rent",
+            "ref_id": 1,
+            "payee": "Elm City Properties",
+            "amount": 2400.0,
+            "due_date": "2026-09-02",
+            "description": "Rent for Chapel Street shop",
+            "days_until_due": 2,
+            "status": "upcoming"
+          }
+        ],
+        "total_due": 3240.0,
+        "checking_balance": 3400.0,
+        "paid": [],
+        "skipped": [],
+        "notification": "2 bill(s) due by 2026-09-07, totaling $3,240.00.\n- Bulldog Print Co: $840.00, 3 day(s) overdue (2026-08-28).\n- Elm City Properties: $2,400.00, due in 2 day(s) (2026-09-02).\nAutopay is off. Checking is $3,400.00; $160.00 left if all are paid."
+      }
+    },
+    {
+      "prompt": "Lets run 3: there's a bulk order for 20 size M hoodies. We want to make the higher of a 30% margin or a public comp from a competitor. Which discount are we showing the competitor?",
+      "tool": "bulk_order_discount",
+      "arguments": {
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "qty": 20,
+        "margin_threshold_pct": 30
+      },
+      "ran_at": "2026-10-14T18:59:08",
+      "is_error": false,
+      "passed": true,
+      "tool_output": {
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "qty": 20,
+        "order_value_at_list": 1160.0,
+        "source_competitors": {
+          "benchmark_discount_pct": 17.5,
+          "comparables": [
+            {
+              "name": "University of Windsor Bookstore (departmental orders)",
+              "discount_pct": 20,
+              "url": "https://uwindsor.ca/dailynews/node/9274",
+              "note": "Larger special bulk orders get 25%, but the threshold isn't published, so it isn't used."
+            },
+            {
+              "name": "Agon Swim (custom wholesale orders)",
+              "discount_pct": 15,
+              "url": "https://agonswim.wiki.zoho.com/Wholesale-discounts.html",
+              "note": "12+ units earn 15/25/30% depending on the retailer's annual volume; the entry-level 15% is used since this is a one-off order."
+            }
+          ],
+          "not_bulk_context": [
+            {
+              "name": "Stanford Student Store",
+              "discount_pct": 10,
+              "url": "https://www.sse.stanford.edu/ventures/student-store",
+              "note": "Everyday student discount, not a bulk discount."
+            },
+            {
+              "name": "Rice University bookstore spirit items",
+              "discount_pct": 10,
+              "url": "https://ricethresher.org/article/2025/04/student-store-offers-discounted-merch-to-students",
+              "note": "Monthly 10% off designated spirit items; not a bulk discount."
+            },
+            {
+              "name": "Missouri State University bookstore",
+              "discount_pct": 35,
+              "url": "https://www.missouristate.edu/Policy/Chapter7/Op7_03_Bookstore_Discount_Policy.htm",
+              "note": "Student discount on clothing and logoed items; not a bulk discount."
+            }
+          ]
+        },
+        "source_margin_floor": {
+          "unit_cost": 22.0,
+          "list_price": 58.0,
+          "list_margin_pct": 62.1,
+          "margin_threshold_pct": 30.0,
+          "floor_unit_price": 31.43,
+          "max_discount_pct": 45.8
+        },
+        "recommended": {
+          "discount_pct": 17.5,
+          "unit_price": 47.85,
+          "order_total": 957.0,
+          "gross_margin_pct": 54.0,
+          "gross_profit": 517.0,
+          "reason": "Matches the competitor benchmark, which stays above the margin threshold."
+        },
+        "stock": {
+          "on_hand": 8,
+          "can_fill_now": false,
+          "shortfall": 12,
+          "restock": {
+            "estimate_available": true,
+            "restock_vendor": "Bulldog Print Co",
+            "restock_days": 5,
+            "delivery_vendor": "QuickShip CT",
+            "delivery_days": 1,
+            "total_days": 6,
+            "estimated_delivery_date": "2026-09-06"
+          }
+        },
+        "requires_employee_approval": true
+      }
+    }
+  ]
+}

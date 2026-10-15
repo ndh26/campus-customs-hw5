@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "campus-customs": {
+      "type": "stdio",
+      "command": "py",
+      "args": ["mcp_server/server.py"],
+      "env": {}
+    }
+  }
+}

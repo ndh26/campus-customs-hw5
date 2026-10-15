@@ -1,0 +1,7 @@
+# Python dependencies for the MCP server and the backend (agents + API)
+pydantic-ai-slim[openai]>=2.42
+fastmcp>=4.0
+openai
+python-dotenv
+fastapi
+uvicorn[standard]
